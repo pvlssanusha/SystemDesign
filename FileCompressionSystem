@@ -1,0 +1,55 @@
+// Online C++ compiler to run C++ program online
+#include <bits/stdc++.h>
+using namespace std;
+
+class CompressionAlgorithm{
+   public:
+  virtual void compress(string filename)=0;
+  virtual ~CompressionAlgorithm() = default;
+};
+class ZIP:public CompressionAlgorithm{
+  private:
+  void compress(string filename) override{
+      cout<<"ZIP compressing "<<filename<<endl;
+  }  
+};
+class RAR:public CompressionAlgorithm{
+  private:
+  void compress(string filename) override{
+      cout<<"RAR compressing  "<<filename<<endl;
+  }  
+};
+class CZIP:public CompressionAlgorithm{
+  
+  void compress(string filename) override{
+      cout<<"CZIP compressing  "<<filename<<endl;
+  }  
+};
+class CompressionService{
+  CompressionAlgorithm *a;
+  public:
+  CompressionService(CompressionAlgorithm *b){
+      a=b;
+    //   a->compress(filename);
+  }
+   void compress(string filename){
+        a->compress(filename);
+    }
+    
+};
+int main() {
+    CompressionAlgorithm *a=new RAR();
+    CompressionService cs(a);
+    cs.compress("File 1");
+     CompressionAlgorithm *b=new ZIP();
+    CompressionService cs1(b);
+    cs1.compress("File 2");
+     CompressionAlgorithm *c=new CZIP();
+    CompressionService cs2(c);
+    cs2.compress("File 3");
+    delete a;
+    delete b;
+    delete c;
+
+    return 0;
+}
