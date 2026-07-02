@@ -1,0 +1,75 @@
+
+#include <bits/stdc++.h>
+using namespace std;
+class EmployeeType{
+  
+  public:
+  virtual ~EmployeeType()=default;
+  virtual double processSalary()=0;  
+};
+class FullTimeEmployee:public EmployeeType{
+    public:
+    int salary;
+    FullTimeEmployee(int amount){
+        salary=amount;
+    }
+    double processSalary() override{
+        return salary;
+    } 
+};
+class PartTimeEmployee:public EmployeeType{
+    public:
+    int hoursRate;
+    int hoursWorked;
+    PartTimeEmployee(int r,int w){
+        hoursRate=r;
+     hoursWorked=w;
+    }
+    double processSalary() override{
+        return hoursRate*hoursWorked;;
+    } 
+};
+class Contractor:public EmployeeType{
+    public:
+    int dailyRate;
+    int daysWorked;
+    Contractor(int r,int w){
+        dailyRate=r;
+     daysWorked=w;
+    }
+    double processSalary() override{
+        return dailyRate*daysWorked;;
+    } 
+};
+class PayrollProcessor{
+    public:
+  vector<EmployeeType *> employees;
+  double totalAmount=0;
+  void ComputeSalary(){
+      for(auto t:employees){
+          totalAmount+=t->processSalary();
+      }
+      cout<<"The total amount is"<<totalAmount<<endl;
+  }
+  void AddEmployee(EmployeeType * e){
+      employees.push_back(e);
+  }
+  
+};
+int main() {
+   
+EmployeeType *e1=new FullTimeEmployee(90000);
+EmployeeType *e2=new PartTimeEmployee(90,50);
+EmployeeType *e3=new Contractor(200,10);
+PayrollProcessor *p1=new PayrollProcessor();
+p1->AddEmployee(e1);
+p1->AddEmployee(e2);
+p1->AddEmployee(e3);
+p1->ComputeSalary();
+delete e1;
+delete e2;
+delete e3;
+delete p1;
+
+    return 0;
+}
